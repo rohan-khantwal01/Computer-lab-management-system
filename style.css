@@ -44,10 +44,170 @@ a {
   min-height: 100vh;
 }
 
+.rohan-widget {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1000;
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
+
+.rohan-logo-btn {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  overflow: hidden;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(23, 32, 51, 0.24);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.rohan-logo-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 16px 42px rgba(23, 32, 51, 0.32);
+}
+
+.rohan-logo-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rohan-card {
+  display: none;
+  width: 240px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.rohan-widget.open .rohan-card {
+  display: grid;
+  gap: 12px;
+}
+
+.rohan-card img {
+  width: 100%;
+  max-height: 280px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.rohan-card a {
+  display: block;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #f97316, #db2777, #7c3aed);
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.rohan-close {
+  justify-self: end;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef3f7;
+  color: var(--ink);
+  font-weight: 800;
+}
+
 .login-page {
   min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(340px, 0.95fr) minmax(360px, 1.05fr);
+}
+
+.rohan-float {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 86px;
+  height: 86px;
+  padding: 0;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.32);
+  z-index: 9999;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.rohan-float:hover {
+  transform: scale(1.14);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+}
+
+.rohan-float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.rohan-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(7, 12, 20, 0.55);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+}
+
+.rohan-card {
+  position: relative;
+  width: min(100%, 420px);
+  padding: 18px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.rohan-overlay .rohan-card {
+  display: grid;
+  gap: 12px;
+}
+
+.rohan-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eff3f7;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.rohan-preview {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.rohan-open-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 750;
 }
 
 .brand-section {
@@ -216,6 +376,21 @@ select {
   background: #e7f4f2;
   color: var(--primary-dark);
   font-weight: 750;
+}
+
+.login-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px dashed #cfe3df;
+  border-radius: 10px;
+  background: #f6fbfa;
+  color: #405261;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.login-note b {
+  color: var(--ink);
 }
 
 .quick-buttons {
@@ -682,5 +857,14 @@ i.offline {
   .topbar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .rohan-logo-btn {
+    width: 58px;
+    height: 58px;
+  }
+
+  .rohan-card {
+    width: min(230px, calc(100vw - 36px));
   }
 }
