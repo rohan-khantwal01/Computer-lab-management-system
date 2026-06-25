@@ -1,5 +1,7 @@
 const STORAGE_KEY = "ims_lab_management_clean_v1";
 const IMS_URL = "https://www.imsroorkee.org/";
+const ROHAN_URL = "https://www.instagram.com/_.rohan._.khantwal_?igsh=cmNsbWhueDQ5bzk3";
+const ROHAN_INSTAGRAM_URL = "https://www.instagram.com/_.rohan._.khantwal_?igsh=cmNsbWhueDQ5bzk3";
 
 const students = [
   { id: "IMS101", name: "Aman Rawat", batch: "BCA 1st Year", computer: "PC-01", color: "#2563c7", photo: "1.jpg" },
@@ -40,6 +42,7 @@ function loadState() {
   const initial = {
     view: "login",
     currentUser: null,
+    showRohanPopup: false,
     customStudents: [],
     showCreateId: false,
     filters: { query: "", batch: "All" },
@@ -187,10 +190,11 @@ function createStudentEntry(data) {
 
 function render() {
   const app = document.querySelector("#app");
-  if (state.view === "login") app.innerHTML = loginView();
-  if (state.view === "teacher") app.innerHTML = teacherView();
-  if (state.view === "detail") app.innerHTML = detailView();
-  if (state.view === "desktop") app.innerHTML = desktopView();
+  let screen = loginView();
+  if (state.view === "teacher") screen = teacherView();
+  if (state.view === "detail") screen = detailView();
+  if (state.view === "desktop") screen = desktopView();
+  app.innerHTML = `${rohanWidgetOverlay()}${screen}`;
   bindEvents();
 }
 
@@ -245,6 +249,10 @@ function loginView() {
           </label>
           <button type="submit">Login</button>
           <button type="button" class="secondary-btn" data-action="openCreate">Create ID</button>
+          <div class="login-note">
+            Demo login: <b>teacher@gamil.com</b> / <b>sir</b><br>
+            Student demo: <b>aman@gamil.com</b> / <b>aman</b>
+          </div>
         </form>
       </div>
       ${createModal}
@@ -390,6 +398,28 @@ function escapeHtml(value) {
 }
 
 function bindEvents() {
+  document.querySelectorAll("[data-action='toggleRohan']").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.showRohanPopup = !state.showRohanPopup;
+      saveState();
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-action='closeRohan']").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.showRohanPopup = false;
+      saveState();
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-action='openRohanInstagram']").forEach((button) => {
+    button.addEventListener("click", () => {
+      window.open(ROHAN_URL, "_blank", "noreferrer");
+    });
+  });
+
   document.querySelectorAll("form[data-action='login']").forEach((form) => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -485,6 +515,7 @@ function bindEvents() {
     button.addEventListener("click", () => {
       state.view = "login";
       state.currentUser = null;
+      state.showRohanPopup = false;
       saveState();
       render();
     });
@@ -501,10 +532,28 @@ function bindEvents() {
       }
       state.view = "login";
       state.currentUser = null;
+      state.showRohanPopup = false;
       saveState();
       render();
     });
   });
+}
+
+function rohanWidgetOverlay() {
+  return `
+    <button class="rohan-float" type="button" data-action="toggleRohan" aria-label="Open Rohan Instagram">
+      <img src="rohanlogo.png" onerror="this.src='rohanlogo.jpg'" alt="Rohan logo">
+    </button>
+    ${state.showRohanPopup ? `
+      <div class="rohan-overlay" data-action="closeRohan">
+        <div class="rohan-card" onclick="event.stopPropagation()">
+          <button class="rohan-close" type="button" data-action="closeRohan" aria-label="Close">×</button>
+          <img class="rohan-preview" src="rohan-insta.png" onerror="this.src='rohan-insta.jpg'" alt="Rohan Instagram preview">
+          <button class="rohan-open-btn" type="button" data-action="openRohanInstagram">Open Instagram</button>
+        </div>
+      </div>
+    ` : ""}
+  `;
 }
 
 render();
